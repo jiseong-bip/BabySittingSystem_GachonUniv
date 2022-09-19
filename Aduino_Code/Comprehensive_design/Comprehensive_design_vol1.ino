@@ -1,6 +1,6 @@
 //아두이노 나노 33 BLE 사용을 위해 보드매니저에서 Arduino Mbed OS Nano Board 설치
 //온도센서 MLX90614 관련 라이브러리에서 Adafruit MLX90614 Library 설치
-//가속도 센서 L3G4200D 관련 라이브러리에서 L3G 설치
+//자이로 센서 L3G4200D 관련 라이브러리에서 L3G 설치
 //산소포화도 센서 MAX30102 관련 라이브러리에서 SparkFun MAX3010x Pulse and Sensor Library 설치
 
 #include <Wire.h>
@@ -9,7 +9,6 @@
 #include "MAX30105.h"
 #include "heartRate.h"
 
-long A = 0;
 long t = 1;
 long t1 = 0;
 const byte RATE_SIZE = 4; //Increase this for more averaging. 4 is good.
@@ -67,13 +66,14 @@ void loop() {
     
     Serial.print("[체온] ") ; Serial.print(Rtemp); Serial.println("*C"); // 체온 출력
     
-    Serial.print("[가속도]"); // 가속도 값 출력
+    Serial.print("[자이로]"); // 자이로 값 출력
     Serial.print(" [X] ");
     Serial.print((int)gyro.g.x);
-    Serial.print(" [Y] ");
+    Serial.print("dps [Y] ");
     Serial.print((int)gyro.g.y);
-    Serial.print(" [Z] ");
-    Serial.println((int)gyro.g.z);
+    Serial.print("dps [Z] ");
+    Serial.print((int)gyro.g.z);
+    Serial.println("dps");
     
     Serial.print("[BPM] "); Serial.println(beatsPerMinute); // BPM 값 출력
     }
