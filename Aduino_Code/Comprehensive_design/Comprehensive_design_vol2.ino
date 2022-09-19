@@ -46,11 +46,9 @@ void loop() {
   unsigned long t = millis();
 
   float Rtemp = mlx.readObjectTempC() - 10; //온도 상수 설정
-
-  if (IMU.accelerationAvailable()) { // 가속도,자이로 센서 설정
-    IMU.readAcceleration(ax, ay, az);
-    IMU.readGyroscope(gx, gy, gz);
-  }
+  
+  IMU.readAcceleration(ax, ay, az); // 가속도 센서 설정
+  IMU.readGyroscope(gx, gy, gz); // 자이로 센서 설정
   
   long irValue = particleSensor.getIR(); // 심박센서 값 설정
   if (checkForBeat(irValue) == true){
@@ -65,7 +63,7 @@ void loop() {
 
 // 이 아래부터 계산된 값을 출력합니다.
 
-  if (t - t1 >= 100 && irValue > 50000){ // 보통 사람피부에 접촉할 경우 7~10만 사이의 값이 출력됨
+  if (t - t1 >= 100 && irValue > 50000 && IMU.accelerationAvailable()){ // 보통 사람피부에 접촉할 경우 7~10만 사이의 값이 출력됨
     t1 = t; // t - t1 = 0 으로 초기화
     
     Serial.print("[체온] ") ; Serial.print(Rtemp); Serial.println("*C"); // 체온 출력
@@ -90,7 +88,7 @@ void loop() {
     
     Serial.print("[BPM] "); Serial.println(beatsPerMinute); // BPM 값 출력
     }
-  else if (t - t1 >= 100 && irValue <= 50000){ 
+  else if (t - t1 >= 100 && irValue <= 50000 && IMU.accelerationAvailable()){ 
     t1 = t;
     Serial.println("신체가 감지되지 않습니다.");
     }
