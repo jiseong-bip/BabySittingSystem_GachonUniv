@@ -1,6 +1,7 @@
-//온도센서 관련 라이브러리에서 Adafruit MLX90614 Library 설치
-//가속도 센서 관련 라이브러리에서 L3G 설치
-//산소포화도 센서 관련 라이브러리에서 SparkFun MAX3010x Pulse and Sensor Library 설치
+//아두이노 나노 33 BLE 사용을 위해 보드매니저에서 Arduino Mbed OS Nano Board 설치
+//온도센서 MLX90614 관련 라이브러리에서 Adafruit MLX90614 Library 설치
+//가속도 센서 L3G4200D 관련 라이브러리에서 L3G 설치
+//산소포화도 센서 MAX30102 관련 라이브러리에서 SparkFun MAX3010x Pulse and Sensor Library 설치
 
 #include <Wire.h>
 #include <Adafruit_MLX90614.h>
@@ -61,7 +62,7 @@ void loop() {
 
 // 이 아래부터 계산된 값을 출력합니다.
 
-  if (t - t1 >= 100 && irValue > 50000){ // 보통 사람피부에 접촉할 경우 7~10만 사이의 값이 출력됨
+  if (t - t1 >= 100 && irValue > 50000){ // 보통 사람피부에 접촉할 경우 적외선 값이 7~10만 사이의 값이 출력됨
     t1 = t; // t - t1 = 0 으로 초기화
     
     Serial.print("[체온] ") ; Serial.print(Rtemp); Serial.println("*C"); // 체온 출력
@@ -76,7 +77,7 @@ void loop() {
     
     Serial.print("[BPM] "); Serial.println(beatsPerMinute); // BPM 값 출력
     }
-  else if (t - t1 >= 100 && irValue <= 50000){ 
+  else if (t - t1 >= 100 && irValue <= 50000){ // 적외선 값이 5만 이하일 경우 신체와 접촉해 있지 않다고 판단
     t1 = t;
     Serial.println("신체가 감지되지 않습니다.");
     }
