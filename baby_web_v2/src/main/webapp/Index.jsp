@@ -24,6 +24,22 @@
 
     <!-- Custom styles for this template-->
     <link href="css/Baby-home.min.css" rel="stylesheet">
+    <script>
+    	$(document).ready(function () {
+    	
+      	function refresh() {
+            	$('#state').load(location.href + "#state");
+        	}
+
+        	setInterval(function () {
+            	refresh()
+        	}, 1000); //5 seconds
+    	});
+
+	</script>
+	<%String name = (String)session.getAttribute("name"); 
+	%>
+	
 
 </head>
 <%MainCon mc = new MainCon(); %>
@@ -284,7 +300,7 @@
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row" id = "state">
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -294,12 +310,12 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Temperature</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%=mc.getTemp() %> 'C</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id ="temperature"><%=mc.getTemp(name) %> 'C</div>
                                         </div>
                                         <div class="col">
                                         	<div class="progress progress-sm mr-2">
                                             	<div class="progress-bar bg-info" role="progressbar"
-                                                	style="width: <%=mc.getTemp() %>%" aria-valuenow="50" aria-valuemin="0"
+                                                	style="width: <%=mc.getTemp(name) %>%" aria-valuenow="50" aria-valuemin="0"
                                                     aria-valuemax="100"></div>
                                             </div>
                                         </div>
@@ -315,7 +331,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">BPM</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%=mc.getBpm() %>BPM</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%=mc.getBpm(name) %>BPM</div>
                                         </div>
                                     </div>
                                 </div>
@@ -332,7 +348,7 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=mc.getState() %></div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=mc.getState(name) %></div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
@@ -379,11 +395,9 @@
                                     </div>
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
+<!--                                 <iframe class="card-body" src = "http:221.142.47.16:8081/?action=stream"></iframe> -->
+                                    
+                                
                             </div>
                         </div>
 
@@ -479,6 +493,9 @@
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script  src="jquery-3.2.1.min.js?t=27"></script>
+
+	
 
     <!-- Custom scripts for all pages-->
     <script src="js/Baby-home.min.js"></script>

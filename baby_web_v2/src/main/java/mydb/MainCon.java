@@ -137,14 +137,14 @@ public class MainCon {
 			con = DBUtil.getConnection();
 		String name= "";
 
-		String sql = "select * from member where id = ? and pwd = ?";
+		String sql = "select * from tbl_users where user_email = ? and password = ?";
 		try {
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id.trim());
 				pstmt.setString(2, pwd.trim());
 				rs = pstmt.executeQuery();				
 		    while(rs.next()){
-			name= (String) rs.getString("name");
+			name= (String) rs.getString("user_name");
 		    }	           
 		}catch(Exception e){
 			return " ";
@@ -155,8 +155,8 @@ public class MainCon {
 		return name;
 	}
 	
-	public float getTemp() {
-		String user = "ji";
+	public float getTemp(String name) {
+		String user = name;
 		float temp = 1;
 		Connection con = null;       //연결
 		PreparedStatement pstmt = null; //명령
@@ -180,8 +180,8 @@ public class MainCon {
 				}
 		return temp;
 	}
-	public int getBpm() {
-		String user = "ji";
+	public int getBpm(String name) {
+		String user = name;
 		int bpm = 0;
 		Connection con = null;       //연결
 		PreparedStatement pstmt = null; //명령
@@ -205,8 +205,8 @@ public class MainCon {
 				}
 		return bpm;
 	}
-	public String getState() {
-		String user = "ji";
+	public String getState(String name) {
+		String user = name;
 		String state = new String();
 		Connection con = null;       //연결
 		PreparedStatement pstmt = null; //명령
@@ -231,10 +231,10 @@ public class MainCon {
 		return state;
 	}
 	public int insertUser(String name, String email, String password) throws SQLException{
-		String sql = "insert into sensor_record values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into tbl_users values(?,?,?)";
 		Connection con = null;
-		 PreparedStatement pstmt = null;
-		 int result = 0;
+		PreparedStatement pstmt = null;
+		int result = 0;
 		try{
 		con = DBUtil.getConnection();
 		
@@ -248,7 +248,7 @@ public class MainCon {
 		}finally{
 			DBUtil.close(pstmt,con);
 		}
-		 return result;
+		return result;
 	}
 
 }

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ page import="mydb.MainCon" %>
+<%@ page import="mydb.DBUtil" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,9 +25,47 @@
 
     <!-- Custom styles for this template-->
     <link href="css/Baby-home.min.css" rel="stylesheet">
+<% MainCon mc = new MainCon();
 
+String Pwd="";
+String RePwd="";
+String name = "";
+String email = "";
+
+name = (String)request.getParameter("fist_name") + " " + (String)request.getParameter("last_name"); 
+Pwd = (String)request.getParameter("password");
+RePwd = (String)request.getParameter("password");
+email = (String)request.getParameter("email");
+
+System.out.println(name);
+System.out.println(Pwd);
+System.out.println(email);
+
+if(email == null){
+	email=" ";
+}
+if(Pwd == null){
+	Pwd=" ";
+}
+if(!name.equals(" ") && !Pwd.equals(" ") && !email.equals(" ")){
+	if(mc.insertUser(name, email, Pwd) == 1){
+		response.sendRedirect("login.jsp");
+	}else{
+		%>		
+		<script type="text/javascript">
+			alert("이미 사용중인 아이디입니다.");
+		</script>
+	<%
+	}
+}
+%>
 </head>
-
+<!-- <script type="text/javascript"> -->
+// 	var frm = document.myfrm;
+	
+// 	frm.action = "UserIsert.jsp"
+// 	frm.submit();
+<!-- </script> -->
 <body class="bg-gradient-primary">
 
     <div class="container">
@@ -38,34 +79,34 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form class="user" method = "post" action = "RegisterAction.jsp" name = "frm">
+                            <form class="user" name ="myfrm">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name = "first_name" id="exampleFirstName"
+                                        <input type="text" class="form-control form-control-user" name = "first_name" id="FirstName"
                                             placeholder="First Name">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" name = "last_name" id="exampleLastName"
+                                        <input type="text" class="form-control form-control-user" name = "last_name" id="LastName"
                                             placeholder="Last Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" name = "email" id="exampleInputEmail"
+                                    <input type="text" class="form-control form-control-user" name = "email" id="InputEmail"
                                         placeholder="Email Address">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" name = "password" class="form-control form-control-user" 
-                                            id="exampleInputPassword" placeholder="Password">
+                                            id="InputPassword" placeholder="Password">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                        <input type="password" class="form-control form-control-user" 
+                                            id="RepeatPassword" placeholder="Repeat Password">
                                     </div>
                                 </div>
-                                <a href="login.jsp" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </a>
+                                <input type = "submit" href="login.jsp" class="btn btn-primary btn-user btn-block"  value ="Register Account">
+                                    
+                                
                                 <hr>
                                 <a href="index.jsp" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Register with Google
@@ -88,6 +129,7 @@
         </div>
 
     </div>
+    
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

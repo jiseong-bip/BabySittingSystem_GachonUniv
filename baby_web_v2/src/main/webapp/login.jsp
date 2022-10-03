@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="mydb.MainCon" %>
+<%@ page import="mydb.DBUtil" %>
+    
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +25,34 @@
 
     <!-- Custom styles for this template-->
     <link href="css/Baby-home.min.css" rel="stylesheet">
+<% MainCon mc = new MainCon();
+
+String email=" ";
+String Pwd=" ";
+String name = "";
+email = (String)request.getParameter("email"); 
+Pwd = (String)request.getParameter("pwd");
+if(email == null){
+	email=" ";
+}
+if(Pwd == null){
+	Pwd=" ";
+}
+if(!email.equals(" ")){
+	name = mc.doLogin(email,Pwd);
+	if(name != ""){
+		//System.out.println(name);
+		session.setAttribute("name", name);
+		response.sendRedirect("Index.jsp"); 
+	}else{
+	%>		
+		<script type="text/javascript">
+			alert("아이디와 패스워드를 확인하십시오.");
+		</script>
+	<%	
+	}
+}
+%>
 
 </head>
 
@@ -43,15 +75,15 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form action="login.jsp" class="user">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
+                                            <input type="text" class="form-control form-control-user" name = "email"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="exampleInputPassword" name="pwd" placeholder="Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -60,14 +92,13 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="Index.jsp" class="btn btn-primary btn-user btn-block">
+                                       <input type="submit" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
                                         <hr>
-                                        <a href="Index.jsp" class="btn btn-google btn-user btn-block">
+                                        <a href="login.jsp" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
-                                        <a href="Index.jsp" class="btn btn-facebook btn-user btn-block">
+                                        <a href="login.jsp" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                         </a>
                                     </form>
