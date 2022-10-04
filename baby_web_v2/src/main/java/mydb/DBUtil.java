@@ -3,8 +3,8 @@ import java.sql.*;
 
 public class DBUtil {
 		final static String DRIVER = "com.mysql.jdbc.Driver";
-		final static String URL = "jdbc:mysql://192.168.0.152:3306/status?serverTimezone=UTC";
-		//final static String URL = "jdbc:mysql://221.142.47.16:5900/status?serverTimezone=UTC";
+		//final static String URL = "jdbc:mysql://192.168.0.152:3306/status?serverTimezone=UTC";
+		final static String URL = "jdbc:mysql://221.142.47.16:5900/status?serverTimezone=UTC";
 		final static String USER = "root";
 		final static String PW = "1q2w3e4r!";
 		

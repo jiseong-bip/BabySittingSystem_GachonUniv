@@ -24,19 +24,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/Baby-home.min.css" rel="stylesheet">
-    <script>
-    	$(document).ready(function () {
-    	
-      	function refresh() {
-            	$('#state').load(location.href + "#state");
-        	}
-
-        	setInterval(function () {
-            	refresh()
-        	}, 1000); //5 seconds
-    	});
-
-	</script>
+    
 	<%String name = (String)session.getAttribute("name"); 
 	%>
 	
@@ -300,7 +288,7 @@
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row" id = "state">
+                    <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -506,6 +494,19 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+<!--     <script>
+     	$(document).ready(function () {
+    	
+       	function refresh() {
+             	$('#temperature').load(location.href + '#temperature');
+         	}
+
+         	setInterval(function () {
+             	refresh()
+         	}, 10000); //5 seconds
+     	});
+
+	</script> -->
 
 </body>
 
