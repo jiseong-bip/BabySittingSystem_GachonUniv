@@ -366,7 +366,7 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Baby Survillance</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -383,9 +383,7 @@
                                     </div>
                                 </div>
                                 <!-- Card Body -->
-<!--                                 <iframe class="card-body" src = "http:221.142.47.16:8081/?action=stream"></iframe> -->
-                                    
-                                
+                                <iframe class="card-body" src = "http:221.142.47.16:8081/?action=stream"></iframe>
                             </div>
                         </div>
 
@@ -494,19 +492,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-<!--     <script>
-     	$(document).ready(function () {
-    	
-       	function refresh() {
-             	$('#temperature').load(location.href + '#temperature');
-         	}
-
-         	setInterval(function () {
-             	refresh()
-         	}, 10000); //5 seconds
-     	});
-
-	</script> -->
 
 </body>
 
