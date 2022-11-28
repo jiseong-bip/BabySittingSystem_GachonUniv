@@ -1,7 +1,18 @@
 package mydb;
 import java.sql.*;
+
+import java.util.*;
 import java.util.Date;
 import java.util.TimeZone;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 
 public class MainCon {
 	public MainCon() {}
@@ -163,13 +174,12 @@ public class MainCon {
 		ResultSet rs = null;         //결과
 		con = DBUtil.getConnection();
 		String sql = "select temperature from tbl_status where user=? order by time DESC limit 1";
-
 		try {
 				pstmt = con.prepareStatement(sql);			
 				pstmt.setString(1, user);
 				rs = pstmt.executeQuery();
 				if(rs.next()){
-					temp = rs.getFloat("temperature");  
+					temp = rs.getFloat("temperature");
 				}           
 		    }catch(Exception e){
 		    	
@@ -179,6 +189,34 @@ public class MainCon {
 			DBUtil.close(rs, pstmt, con);
 				}
 		return temp;
+	}
+	public List<Float> getTempList(String name) {
+		String user = name;
+		List<Float> tempList = new ArrayList<Float>();
+		Connection con = null;       //연결
+		PreparedStatement pstmt = null; //명령
+		ResultSet rs = null;         //결과
+		con = DBUtil.getConnection();
+		String sql = "select temperature from tbl_status where user=? order by time DESC limit 10";
+
+		try {
+				pstmt = con.prepareStatement(sql);			
+				pstmt.setString(1, user);
+				rs = pstmt.executeQuery();
+				
+				for(int i = 0; i < 10; ++i)
+				{
+					if(rs.next())//다음행에 접근
+						tempList.add(rs.getFloat("temperature"));
+				}	         
+		    }catch(Exception e){
+		    	
+		    }
+		    finally{
+					// TODO Auto-generated catch block
+			DBUtil.close(rs, pstmt, con);
+				}
+		return tempList;
 	}
 	public int getBpm(String name) {
 		String user = name;
@@ -250,5 +288,47 @@ public class MainCon {
 		}
 		return result;
 	}
+	
+	public JSONArray getJSONArray(String name) {
+		String user = name;
+		Connection con = null;       //연결
+		PreparedStatement pstmt = null; //명령
+		ResultSet rs = null; 
+		con = DBUtil.getConnection();
+		JSONArray jsonArray = new JSONArray();
+		String sql = "select time, temperature from tbl_status where user=? order by time DESC limit 10";
+		try {
+			pstmt = con.prepareStatement(sql);			
+			pstmt.setString(1, user);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+
+				JSONObject jsonObject = new JSONObject(); //Map컬렉션
+				jsonObject.put("time",rs.getString("time"));
+				jsonObject.put("temp",rs.getFloat("temperature"));
+				
+				jsonArray.add(jsonObject);
+
+				}
+		          
+	    }catch(Exception e){
+	    	
+	    }
+	    finally{
+				// TODO Auto-generated catch block
+		DBUtil.close(rs, pstmt, con);
+			}return jsonArray;
+		
+		//저장
+	}
+	public void makeJsonFile(JSONArray jsonArray) throws IOException {
+		File jsonFile = new File("data.json");
+		BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFile));
+		String str = jsonArray.toString();
+        writer.write(str);
+        writer.close();
+	}
+	
 
 }
